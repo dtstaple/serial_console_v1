@@ -107,6 +107,12 @@ void MainWindow::buildToolbar() {
     connect(refreshAct, &QAction::triggered, this, &MainWindow::refreshPorts);
     tb->addAction(refreshAct);
 
+    tb->addWidget(new QLabel(tr(" Path: ")));
+    m_customPort = new QLineEdit();
+    m_customPort->setPlaceholderText(tr("or /dev/ttys###"));
+    m_customPort->setMaximumWidth(180);
+    tb->addWidget(m_customPort);
+
     tb->addSeparator();
 
     tb->addWidget(new QLabel(tr(" Baud: ")));
@@ -245,7 +251,9 @@ void MainWindow::toggleConnection() {
         m_serial->close();
         return;
     }
-    const QString port = m_portCombo->currentData().toString();
+    QString port = m_customPort->text().trimmed();
+    if (port.isEmpty())
+        port = m_portCombo->currentData().toString();
     if (port.isEmpty()) {
         QMessageBox::warning(this, tr("No port"), tr("Select a serial port first."));
         return;
@@ -403,6 +411,7 @@ void MainWindow::onLevelFilterToggled() {
 void MainWindow::setConnectedState(bool connected) {
     m_connectBtn->setText(connected ? tr("Disconnect") : tr("Connect"));
     m_portCombo->setEnabled(!connected);
+    m_customPort->setEnabled(!connected);
     m_baudCombo->setEnabled(!connected);
     m_dataCombo->setEnabled(!connected);
     m_parityCombo->setEnabled(!connected);

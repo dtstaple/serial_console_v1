@@ -59,6 +59,7 @@ private:
 
     // Connection controls
     QComboBox   *m_portCombo   = nullptr;
+    QLineEdit   *m_customPort  = nullptr;
     QComboBox   *m_baudCombo   = nullptr;
     QComboBox   *m_dataCombo   = nullptr;
     QComboBox   *m_parityCombo = nullptr;
