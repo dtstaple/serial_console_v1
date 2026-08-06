@@ -43,7 +43,7 @@ bool LogFilterProxy::filterAcceptsRow(int sourceRow,
     const LogMessage &m = model->messageAt(sourceRow);
 
     // Markers and system notices are always visible.
-    if (m.direction != Direction::Marker && m.direction != Direction::System) {
+    if (m.direction != sd::Direction::Marker && m.direction != sd::Direction::System) {
         if (m.level == LogLevel::None) {
             if (!m_showUnclassified) return false;
         } else if (!m_enabled.contains(m.level)) {
